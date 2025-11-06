@@ -54,6 +54,7 @@ public class EducationController {
     }
     
     @GetMapping("/{educationId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EducationDto> getEducationById(@PathVariable Long educationId) {
         try {
             EducationDto education = educationService.getEducationById(educationId);
@@ -106,12 +107,14 @@ public class EducationController {
     }
     
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EducationDto>> getEducationsByUserId(@PathVariable Long userId) {
         List<EducationDto> educations = educationService.getAllEducationsByUser(userId);
         return ResponseEntity.ok(educations);
     }
     
     @GetMapping("/user/{userId}/current")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EducationDto>> getCurrentEducationsByUserId(@PathVariable Long userId) {
         List<EducationDto> educations = educationService.getCurrentEducationsByUser(userId);
         return ResponseEntity.ok(educations);

@@ -74,6 +74,7 @@ public class SkillController {
     }
     
     @GetMapping("/{skillId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SkillDto> getSkillById(@PathVariable Long skillId) {
         try {
             SkillDto skill = skillService.getSkillById(skillId);
@@ -126,18 +127,21 @@ public class SkillController {
     }
     
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SkillDto>> getSkillsByUserId(@PathVariable Long userId) {
         List<SkillDto> skills = skillService.getAllSkillsByUser(userId);
         return ResponseEntity.ok(skills);
     }
     
     @GetMapping("/user/{userId}/featured")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SkillDto>> getFeaturedSkillsByUserId(@PathVariable Long userId) {
         List<SkillDto> skills = skillService.getFeaturedSkillsByUser(userId);
         return ResponseEntity.ok(skills);
     }
     
     @GetMapping("/user/{userId}/category/{category}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SkillDto>> getSkillsByUserIdAndCategory(@PathVariable Long userId, @PathVariable String category) {
         try {
             List<SkillDto> skills = skillService.getSkillsByCategory(userId, category);

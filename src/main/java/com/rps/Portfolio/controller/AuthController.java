@@ -131,6 +131,7 @@ public class AuthController {
         dto.setLinkedinUrl(user.getLinkedinUrl());
         dto.setGithubUrl(user.getGithubUrl());
         dto.setWebsiteUrl(user.getWebsiteUrl());
+        dto.setRole(user.getRole() != null ? user.getRole().name() : null);
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
         return dto;

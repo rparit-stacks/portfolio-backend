@@ -54,6 +54,7 @@ public class ExperienceController {
     }
     
     @GetMapping("/{experienceId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExperienceDto> getExperienceById(@PathVariable Long experienceId) {
         try {
             ExperienceDto experience = experienceService.getExperienceById(experienceId);
@@ -106,12 +107,14 @@ public class ExperienceController {
     }
     
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ExperienceDto>> getExperiencesByUserId(@PathVariable Long userId) {
         List<ExperienceDto> experiences = experienceService.getAllExperiencesByUser(userId);
         return ResponseEntity.ok(experiences);
     }
     
     @GetMapping("/user/{userId}/current")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ExperienceDto>> getCurrentExperiencesByUserId(@PathVariable Long userId) {
         List<ExperienceDto> experiences = experienceService.getCurrentExperiencesByUser(userId);
         return ResponseEntity.ok(experiences);

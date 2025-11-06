@@ -53,7 +53,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
-                    .requestMatchers("/api/users/**").permitAll()
                 .requestMatchers("/api/portfolio/**").permitAll()
                 .requestMatchers("/api/contacts").permitAll()
                 .requestMatchers("/api/analytics/track").permitAll()

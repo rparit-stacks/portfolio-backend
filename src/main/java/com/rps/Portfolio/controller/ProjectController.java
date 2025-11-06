@@ -7,6 +7,7 @@ import com.rps.Portfolio.security.CustomUserDetails;
 import com.rps.Portfolio.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class ProjectController {
     private ProjectService projectService;
     
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProjectDto>> getCurrentUserProjects() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -36,6 +38,7 @@ public class ProjectController {
     }
     
     @GetMapping("/featured")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProjectDto>> getCurrentUserFeaturedProjects() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -51,6 +54,7 @@ public class ProjectController {
     }
     
     @GetMapping("/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectDto> getProjectById(@PathVariable Long projectId) {
         try {
             ProjectDto project = projectService.getProjectById(projectId);
@@ -61,6 +65,7 @@ public class ProjectController {
     }
     
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectDto> createProject(@RequestBody CreateProjectRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -80,6 +85,7 @@ public class ProjectController {
     }
     
     @PutMapping("/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectDto> updateProject(@PathVariable Long projectId, @RequestBody UpdateProjectRequest request) {
         try {
             ProjectDto updatedProject = projectService.updateProject(projectId, request);
@@ -90,6 +96,7 @@ public class ProjectController {
     }
     
     @DeleteMapping("/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
         try {
             projectService.deleteProject(projectId);
@@ -100,12 +107,14 @@ public class ProjectController {
     }
     
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProjectDto>> getProjectsByUserId(@PathVariable Long userId) {
         List<ProjectDto> projects = projectService.getProjectsByUserWithTechnologies(userId);
         return ResponseEntity.ok(projects);
     }
     
     @GetMapping("/user/{userId}/featured")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProjectDto>> getFeaturedProjectsByUserId(@PathVariable Long userId) {
         List<ProjectDto> projects = projectService.getFeaturedProjectsByUser(userId);
         return ResponseEntity.ok(projects);

@@ -7,8 +7,6 @@ import com.rps.Portfolio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     
@@ -16,25 +14,25 @@ public class UserService {
     private UserRepository userRepository;
     
     public UserDto getUserProfile(Long userId) {
-        User userOpt = userRepository.findUserById(userId);
-        if (userOpt!=null) {
-            return convertToDto(userOpt);
+        User user = userRepository.findUserById(userId);
+        if (user != null) {
+            return convertToDto(user);
         }
         throw new RuntimeException("User not found with id: " + userId);
     }
     
     public UserDto getUserProfileWithDetails(Long userId) {
-        Optional<User> userOpt = userRepository.findByIdWithDetails(userId);
-        if (userOpt.isPresent()) {
-            return convertToDtoWithDetails(userOpt.get());
+        System.out.println("called 2");
+        User user = userRepository.findUserById(userId);
+        if (user != null) {
+            return convertToDtoWithDetails(user);
         }
         throw new RuntimeException("User not found with id: " + userId);
     }
     
     public UserDto updateUserProfile(Long userId, UpdateUserProfileRequest request) {
-        Optional<User> userOpt = userRepository.findById(userId);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
+        User user = userRepository.findUserById(userId);
+        if (user != null) {
             
             if (request.getFirstName() != null) {
                 user.setFirstName(request.getFirstName());
@@ -91,6 +89,7 @@ public class UserService {
         dto.setLinkedinUrl(user.getLinkedinUrl());
         dto.setGithubUrl(user.getGithubUrl());
         dto.setWebsiteUrl(user.getWebsiteUrl());
+        dto.setRole(user.getRole() != null ? user.getRole().name() : null);
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
         return dto;

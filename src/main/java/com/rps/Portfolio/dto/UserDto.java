@@ -18,6 +18,7 @@ public class UserDto {
     private String linkedinUrl;
     private String githubUrl;
     private String websiteUrl;
+    private String role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<ProjectDto> projects;
@@ -127,6 +128,14 @@ public class UserDto {
 
     public void setWebsiteUrl(String websiteUrl) {
         this.websiteUrl = websiteUrl;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public LocalDateTime getCreatedAt() {

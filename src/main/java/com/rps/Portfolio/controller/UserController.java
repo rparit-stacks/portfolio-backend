@@ -6,6 +6,7 @@ import com.rps.Portfolio.security.CustomUserDetails;
 import com.rps.Portfolio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class UserController {
     private UserService userService;
     
     @GetMapping("/profile")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDto> getCurrentUserProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -33,6 +35,7 @@ public class UserController {
     }
     
     @GetMapping("/profile/details")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDto> getCurrentUserProfileWithDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -48,6 +51,7 @@ public class UserController {
     }
     
     @PutMapping("/profile")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDto> updateCurrentUserProfile(@RequestBody UpdateUserProfileRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -67,6 +71,7 @@ public class UserController {
     }
     
     @GetMapping("/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
         try {
             UserDto userDto = userService.getUserProfile(userId);
